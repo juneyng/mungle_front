@@ -12,7 +12,7 @@ function WritePage() {
         multiline
         rows={4}
         fullWidth
-        placeholder="오늘 마음이 어때요?"
+        placeholder="오늘의 무의식을 담아보세요."
         style={{ marginBottom: "20px" }}
       />
       <Button variant="contained">멍글해보기</Button>
