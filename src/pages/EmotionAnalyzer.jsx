@@ -29,7 +29,7 @@ const EmotionAnalyzer = () => {
         type="text"
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="여기에 텍스트를 입력하세요..."
+        placeholder="마음 속에 있는 말들을 적어봐요"
         className="text-input"
       />
       <button onClick={analyzeEmotion} className="analyze-button">
