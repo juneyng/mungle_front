@@ -13,7 +13,7 @@
 .analyze-button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   cursor: pointer;
@@ -26,4 +26,29 @@
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 5px;
+}
+.history-list {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+.history-list li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  word-break: break-all;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.delete-button {
+  padding: 5px 10px;
+  font-size: 12px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.delete-button:hover {
+  background-color: #d32f2f;
 }
