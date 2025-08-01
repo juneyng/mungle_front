@@ -41,6 +41,18 @@ const EmotionAnalyzer = () => {
     }
   };
 
+  const deleteHistory = async (id) => {
+    try {
+      await axios.delete(`/api/history/${id}`);
+      fetchHistory(); // 삭제 후 갱신
+    } catch (error) {
+      console.error(
+        "Error deleting history:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+
   useEffect(() => {
     fetchHistory();
   }, []);
@@ -73,6 +85,12 @@ const EmotionAnalyzer = () => {
             {record.text} - {record.emotion} (신뢰도:{" "}
             {record.confidence.toFixed(3)}) -{" "}
             {new Date(record.timestamp).toLocaleString()}
+            <button
+              onClick={() => deleteHistory(record.id)}
+              className="delete-button"
+            >
+              삭제
+            </button>
           </li>
         ))}
       </ul>
