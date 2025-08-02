@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./EmotionAnalyzer.css";
 
@@ -7,13 +7,17 @@ const EmotionAnalyzer = () => {
   const [result, setResult] = useState(null);
   const [history, setHistory] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortOrder, setSortOrder] = useState("latest"); // 'latest' or 'oldest'
+  const [sortOrder, setSortOrder] = useState("latest");
+  const [stats, setStats] = useState({});
+  const [dailyStats, setDailyStats] = useState({});
 
   const analyzeEmotion = async () => {
     try {
       const response = await axios.post("/api/analyze", { text });
       setResult(response.data);
-      fetchHistory(); // 갱신
+      fetchHistory();
+      fetchStats();
+      fetchDailyStats(); // 날짜별 통계 갱신
     } catch (error) {
       console.error(
         "Error analyzing emotion:",
@@ -29,11 +33,9 @@ const EmotionAnalyzer = () => {
 
   const fetchHistory = async () => {
     try {
-      console.log("Fetching history from:", "/api/history");
       const response = await axios.get("/api/history", {
         withCredentials: false,
       });
-      console.log("History response:", response.data);
       setHistory(response.data);
     } catch (error) {
       console.error(
@@ -43,10 +45,40 @@ const EmotionAnalyzer = () => {
     }
   };
 
+  const fetchStats = async () => {
+    try {
+      const response = await axios.get("/api/stats", {
+        withCredentials: false,
+      });
+      setStats(response.data);
+    } catch (error) {
+      console.error(
+        "Error fetching stats:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+
+  const fetchDailyStats = async () => {
+    try {
+      const response = await axios.get("/api/daily-stats", {
+        withCredentials: false,
+      });
+      setDailyStats(response.data);
+    } catch (error) {
+      console.error(
+        "Error fetching daily stats:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
+
   const deleteHistory = async (id) => {
     try {
       await axios.delete(`/api/history/${id}`);
-      fetchHistory(); // 삭제 후 갱신
+      fetchHistory();
+      fetchStats();
+      fetchDailyStats(); // 날짜별 통계 갱신
     } catch (error) {
       console.error(
         "Error deleting history:",
@@ -55,7 +87,6 @@ const EmotionAnalyzer = () => {
     }
   };
 
-  // 필터링 및 정렬된 히스토리 계산
   const filteredAndSortedHistory = history
     .filter((record) =>
       record.text.toLowerCase().includes(searchTerm.toLowerCase())
@@ -65,10 +96,6 @@ const EmotionAnalyzer = () => {
       const dateB = new Date(b.timestamp).getTime();
       return sortOrder === "latest" ? dateB - dateA : dateA - dateB;
     });
-
-  useEffect(() => {
-    fetchHistory();
-  }, []);
 
   return (
     <div className="analyzer-container">
@@ -124,6 +151,35 @@ const EmotionAnalyzer = () => {
           </li>
         ))}
       </ul>
+      <h2>감정 통계</h2>
+      <div className="stats-container">
+        {Object.entries(stats).length > 0 ? (
+          <div>
+            <pre>{JSON.stringify(stats, null, 2)}</pre>
+          </div>
+        ) : (
+          <p>통계 데이터가 없습니다.</p>
+        )}
+      </div>
+      <h2>날짜별 캘린더 통계</h2>
+      <div className="calendar-container">
+        {Object.entries(dailyStats).length > 0 ? (
+          Object.entries(dailyStats).map(([date, emotions]) => (
+            <div key={date} className="calendar-day">
+              <h3>{new Date(date).toLocaleDateString()}</h3>
+              <ul>
+                {Object.entries(emotions).map(([emotion, count]) => (
+                  <li key={emotion}>
+                    {emotion}: {count}회
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        ) : (
+          <p>날짜별 데이터가 없습니다.</p>
+        )}
+      </div>
     </div>
   );
 };
