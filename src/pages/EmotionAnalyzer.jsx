@@ -6,6 +6,8 @@ const EmotionAnalyzer = () => {
   const [text, setText] = useState("");
   const [result, setResult] = useState(null);
   const [history, setHistory] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState("latest"); // 'latest' or 'oldest'
 
   const analyzeEmotion = async () => {
     try {
@@ -53,6 +55,17 @@ const EmotionAnalyzer = () => {
     }
   };
 
+  // 필터링 및 정렬된 히스토리 계산
+  const filteredAndSortedHistory = history
+    .filter((record) =>
+      record.text.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      const dateA = new Date(a.timestamp).getTime();
+      const dateB = new Date(b.timestamp).getTime();
+      return sortOrder === "latest" ? dateB - dateA : dateA - dateB;
+    });
+
   useEffect(() => {
     fetchHistory();
   }, []);
@@ -78,9 +91,26 @@ const EmotionAnalyzer = () => {
           <p>메시지: {result.message}</p>
         </div>
       )}
+      <div className="filter-section">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="텍스트 검색..."
+          className="text-input"
+        />
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+          className="sort-select"
+        >
+          <option value="latest">최신순</option>
+          <option value="oldest">오래된 순</option>
+        </select>
+      </div>
       <h2>히스토리</h2>
       <ul className="history-list">
-        {history.map((record) => (
+        {filteredAndSortedHistory.map((record) => (
           <li key={record.id}>
             {record.text} - {record.emotion} (신뢰도:{" "}
             {record.confidence.toFixed(3)}) -{" "}
