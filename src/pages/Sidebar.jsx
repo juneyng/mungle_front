@@ -1,85 +1,79 @@
 import React from "react";
+import "./Sidebar.css";
 
 const Sidebar = () => {
   return (
     <div className="sidebar">
-      {" "}
-      <h2 className="text-2xl font-bold mb-6">DIARY</h2>
-      <nav>
-        <ul className="space-y-2">
-          <li>
-            <a href="#" className="block p-2 hover:bg-gray-200 rounded">
+      <h2 className="sidebar-title">멍글멍글</h2>
+      <nav className="sidebar-nav">
+        <ul className="nav-list">
+          <li className="nav-item">
+            <a href="#" className="nav-link">
               Dashboard
             </a>
           </li>
-          <li>
-            <a href="#" className="block p-2 hover:bg-gray-200 rounded">
+          <li className="nav-item">
+            <a href="#" className="nav-link">
               Quick Note
             </a>
           </li>
-          <li>
-            <a href="#" className="block p-2 hover:bg-gray-200 rounded">
+          <li className="nav-item">
+            <a href="#" className="nav-link">
               Journal
             </a>
           </li>
-          <li>
-            <a href="#" className="block p-2 hover:bg-gray-200 rounded">
+          <li className="nav-item">
+            <a href="#" className="nav-link">
               Notes
             </a>
           </li>
-          <li>
-            <a href="#" className="block p-2 hover:bg-gray-200 rounded">
+          <li className="nav-item">
+            <a href="#" className="nav-link">
               To-Do
             </a>
           </li>
-          <li>
-            <a href="#" className="block p-2 hover:bg-gray-200 rounded">
+          <li className="nav-item">
+            <a href="#" className="nav-link">
               Calendar
             </a>
           </li>
-          <li className="mt-4">
-            <hr />
+          <li className="nav-divider">
+            <hr className="divider-line" />
           </li>
-          <li>
-            <a href="#" className="block p-2 hover:bg-gray-200 rounded">
-              Favourites
-            </a>
-          </li>
-          <li>
-            <a href="#" className="block p-2 hover:bg-gray-200 rounded">
+          <li className="nav-section-title">Favourites</li>
+          <li className="nav-item">
+            <a href="#" className="nav-link">
               Journal - April
             </a>
           </li>
-          <li>
-            <a href="#" className="block p-2 hover:bg-gray-200 rounded">
+          <li className="nav-item">
+            <a href="#" className="nav-link">
               Finances
             </a>
           </li>
-          <li>
-            <a href="#" className="block p-2 hover:bg-gray-200 rounded">
+          <li className="nav-item">
+            <a href="#" className="nav-link">
               Home tasks
             </a>
           </li>
-          <li>
-            <a href="#" className="block p-2 hover:bg-gray-200 rounded">
+          <li className="nav-item">
+            <a href="#" className="nav-link">
               Books to read
             </a>
           </li>
-          <li>
-            <a href="#" className="block p-2 hover:bg-gray-200 rounded">
+          <li className="nav-item">
+            <a href="#" className="nav-link">
               Travel list
             </a>
           </li>
-          <li className="mt-4">
-            <hr />
+          <li className="nav-divider">
+            <hr className="divider-line" />
           </li>
-          <li>
-            <button className="w-full p-2 text-left hover:bg-gray-200 rounded">
-              New Note
-            </button>
+          <li className="nav-item">
+            <button className="nav-button nav-button--primary">New Note</button>
           </li>
-          <li>
-            <button className="w-full p-2 text-left hover:bg-gray-200 rounded">
+          <li className="nav-item">
+            <button className="nav-button nav-button--secondary">
               Settings
             </button>
           </li>

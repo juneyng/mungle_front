@@ -1,0 +1,385 @@
+/* 히스토리 페이지 컨테이너 */
+.history-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 요약 카드 그리드 */
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* 요약 카드 스타일 */
+.summary-card {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+
+.summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.summary-item:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.summary-icon {
+  font-size: 1.2rem;
+  margin-right: 0.75rem;
+}
+
+.summary-text {
+  font-weight: 500;
+  color: #92400e;
+}
+
+/* 예정된 일정 카드 */
+.upcoming-card {
+  background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+}
+
+.upcoming-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.upcoming-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.upcoming-item:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.upcoming-date {
+  background-color: #4f46e5;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-right: 0.75rem;
+  min-width: 60px;
+  text-align: center;
+}
+
+.upcoming-event {
+  font-weight: 500;
+  color: #3730a3;
+}
+
+/* 메인 히스토리 카드 */
+.history-main-card {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  margin-bottom: 2rem;
+}
+
+/* 히스토리 컨트롤 */
+.history-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.search-input--large {
+  flex: 1;
+  min-width: 0;
+}
+
+.sort-select {
+  padding: 0.5rem 1rem;
+  border: 2px solid #0ea5e9;
+  border-radius: 0.5rem;
+  background-color: white;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.sort-select:focus {
+  outline: none;
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+/* 히스토리 통계 */
+.history-stats {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 0.75rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0c4a6e;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: #0369a1;
+  font-weight: 500;
+}
+
+/* 히스토리 리스트 */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* 히스토리 아이템 */
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.25rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 0.75rem;
+  border-left: 4px solid #0ea5e9;
+  transition: all 0.2s;
+}
+
+.history-item:hover {
+  background-color: rgba(255, 255, 255, 0.95);
+  transform: translateX(4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.history-content {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.history-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.history-meta {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.emotion-tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* 감정별 색상 */
+.emotion-joy {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.emotion-sad {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.emotion-anger {
+  background-color: #fecaca;
+  color: #dc2626;
+}
+
+.emotion-stress {
+  background-color: #fed7d7;
+  color: #c53030;
+}
+
+.emotion-neutral {
+  background-color: #e5e7eb;
+  color: #6b7280;
+}
+
+.confidence-badge {
+  background-color: #e0e7ff;
+  color: #4338ca;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: "Courier New", monospace;
+}
+
+.timestamp {
+  color: #6b7280;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.history-message {
+  font-style: italic;
+  color: #4b5563;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+/* 삭제 버튼 */
+.delete-btn {
+  padding: 0.5rem;
+  background-color: transparent;
+  border: 2px solid #ef4444;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+  color: #ef4444;
+}
+
+.delete-btn:hover {
+  background-color: #ef4444;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* 빈 상태 */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #6b7280;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.empty-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* 뒤로 가기 버튼 */
+.back-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 1rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  font-size: 1rem;
+  font-weight: 600;
+  z-index: 100;
+}
+
+.back-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .history-container {
+    padding: 1rem;
+  }
+
+  .page-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .header-controls {
+    justify-content: center;
+  }
+
+  .search-input {
+    min-width: auto;
+    flex: 1;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .history-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .search-input--large {
+    width: 100%;
+  }
+
+  .history-stats {
+    gap: 1rem;
+    padding: 0.75rem;
+  }
+
+  .stat-number {
+    font-size: 1.25rem;
+  }
+
+  .history-item {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .history-content {
+    margin-right: 0;
+  }
+
+  .history-meta {
+    gap: 0.5rem;
+  }
+
+  .back-btn {
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+    padding: 0.75rem 1rem;
+  }
+}
