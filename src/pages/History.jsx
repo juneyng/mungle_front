@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./EmotionAnalyzer.css";
 
@@ -7,148 +6,80 @@ const History = () => {
   const [history, setHistory] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("latest");
-  const [stats, setStats] = useState({});
-  const [dailyStats, setDailyStats] = useState({});
   const navigate = useNavigate();
-
-  const fetchHistory = async () => {
-    try {
-      const response = await axios.get("/api/history", {
-        withCredentials: false,
-      });
-      setHistory(response.data);
-    } catch (error) {
-      console.error(
-        "Error fetching history:",
-        error.response ? error.response.data : error.message
-      );
-    }
-  };
-
-  const fetchStats = async () => {
-    try {
-      const response = await axios.get("/api/stats", {
-        withCredentials: false,
-      });
-      setStats(response.data);
-    } catch (error) {
-      console.error(
-        "Error fetching stats:",
-        error.response ? error.response.data : error.message
-      );
-    }
-  };
-
-  const fetchDailyStats = async () => {
-    try {
-      const response = await axios.get("/api/daily-stats", {
-        withCredentials: false,
-      });
-      setDailyStats(response.data);
-    } catch (error) {
-      console.error(
-        "Error fetching daily stats:",
-        error.response ? error.response.data : error.message
-      );
-    }
-  };
-
-  const deleteHistory = async (id) => {
-    try {
-      await axios.delete(`/api/history/${id}`);
-      fetchHistory();
-      fetchStats();
-      fetchDailyStats();
-    } catch (error) {
-      console.error(
-        "Error deleting history:",
-        error.response ? error.response.data : error.message
-      );
-    }
-  };
 
   const filteredAndSortedHistory = history
     .filter((record) =>
       record.text.toLowerCase().includes(searchTerm.toLowerCase())
     )
-    .sort((a, b) => {
-      const dateA = new Date(a.timestamp).getTime();
-      const dateB = new Date(b.timestamp).getTime();
-      return sortOrder === "latest" ? dateB - dateA : dateA - dateB;
-    });
-
-  useEffect(() => {
-    fetchHistory();
-    fetchStats();
-    fetchDailyStats();
-  }, []);
+    .sort((a, b) =>
+      sortOrder === "latest"
+        ? new Date(b.timestamp) - new Date(a.timestamp)
+        : new Date(a.timestamp) - new Date(b.timestamp)
+    );
 
   return (
-    <div className="analyzer-container">
-      <button onClick={() => navigate("/")} className="back-button">
-        돌아가기
-      </button>
-      <div className="filter-section">
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="텍스트 검색..."
-          className="text-input"
-        />
-        <select
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-          className="sort-select"
-        >
-          <option value="latest">최신순</option>
-          <option value="oldest">오래된 순</option>
-        </select>
+    <div>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">히스토리</h1>
+        <div className="flex space-x-4">
+          <input
+            type="text"
+            placeholder="Search"
+            className="p-2 border rounded"
+          />
+          <button className="p-2 border rounded">📑</button>
+          <button className="p-2 border rounded">🔔</button>
+          <button className="p-2 border rounded">🔗</button>
+        </div>
       </div>
-      <h2>히스토리</h2>
-      <ul className="history-list">
-        {filteredAndSortedHistory.map((record) => (
-          <li key={record.id}>
-            {record.text} - {record.emotion} (신뢰도:{" "}
-            {record.confidence.toFixed(3)}) -{" "}
-            {new Date(record.timestamp).toLocaleString()}
-            <button
-              onClick={() => deleteHistory(record.id)}
-              className="delete-button"
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white p-4 rounded-lg shadow">
+          <h2 className="text-xl font-semibold mb-4">RECENT NOTES</h2>
+          <p>Journal - April</p>
+          <p>Mental health check</p>
+          <p>Workout log</p>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow">
+          <h2 className="text-xl font-semibold mb-4">UPCOMING</h2>
+          <p>Saturday, October 31 - Halloween party</p>
+          <p>Thursday, November 12 - Birthday party</p>
+        </div>
+      </div>
+      <div className="bg-white p-4 rounded-lg shadow mt-6">
+        <div className="flex space-x-4 mb-4">
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="텍스트 검색..."
+            className="p-2 border rounded flex-1"
+          />
+          <select
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="p-2 border rounded"
+          >
+            <option value="latest">최신순</option>
+            <option value="oldest">오래된 순</option>
+          </select>
+        </div>
+        <ul className="space-y-2">
+          {filteredAndSortedHistory.map((record) => (
+            <li
+              key={record.id}
+              className="p-2 border rounded flex justify-between items-center"
             >
-              삭제
-            </button>
-          </li>
-        ))}
-      </ul>
-      <h2>감정 통계</h2>
-      <div className="stats-container">
-        {Object.entries(stats).length > 0 ? (
-          <div>
-            <pre>{JSON.stringify(stats, null, 2)}</pre>
-          </div>
-        ) : (
-          <p>통계 데이터가 없습니다.</p>
-        )}
-      </div>
-      <h2>날짜별 캘린더 통계</h2>
-      <div className="calendar-container">
-        {Object.entries(dailyStats).length > 0 ? (
-          Object.entries(dailyStats).map(([date, emotions]) => (
-            <div key={date} className="calendar-day">
-              <h3>{new Date(date).toLocaleDateString()}</h3>
-              <ul>
-                {Object.entries(emotions).map(([emotion, count]) => (
-                  <li key={emotion}>
-                    {emotion}: {count}회
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))
-        ) : (
-          <p>날짜별 데이터가 없습니다.</p>
-        )}
+              <span>
+                {record.text} - {record.emotion} (신뢰도:{" "}
+                {record.confidence.toFixed(3)})
+              </span>
+              <button className="p-1 bg-red-500 text-white rounded hover:bg-red-600">
+                삭제
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
